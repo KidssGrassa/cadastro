@@ -18,24 +18,24 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // Rota para exibir o formulário de consulta
-app.get('/consulta', (req, res) => {
+app.get('/produtos', (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Consulta de clientes</title>
+        <title>Consulta de Produtos</title>
       </head>
       <body>
-        <h1>Consulta de clientes</h1>
-        <form method="POST" action="/clientes">
-          <label for="nome">Nome:</label>
-          <input type="text" id="nome" name="nome"><br><br>
-          <label for="endereco">Endereço:</label>
-          <input type="text" id="endereco" name="endereco"><br><br>
-          <label for="idade">Idade:</label>
-          <input type="text" id="idade" name="idade"><br><br>
-          <label for="numfilhos">Número de filhos:</label>
-          <input type="text" id="numfilhos" name="numfilhos"><br><br>
+        <h1>Consulta de produtos</h1>
+        <form method="POST" action="/produtos">
+          <label for="nome">ID:</label>
+          <input type="text" id="id" name="id"><br><br>
+          <label for="descricao">Descrição:</label>
+          <input type="text" id="descricao" name="descricao"><br><br>
+          <label for="quantidade">Idade:</label>
+          <input type="text" id="quantidade" name="quantidade"><br><br>
+          <label for="valor">Valor:</label>
+          <input type="text" id="valor" name="valor"><br><br>
           <button type="submit">Consultar</button>
         </form>
       </body>
@@ -46,11 +46,11 @@ app.get('/consulta', (req, res) => {
 // Rota para processar a consulta
 app.post('/clientes', (req, res) => {
   //const nome = req.body.nome;
-  const { nome, endereco, idade, numfilhos } = req.body;
+  const { id, descricao, quantidade, valor } = req.body;
   //const endereco = req.body.endereco;
   
   // Consulta no banco de dados
-  connection.query(`SELECT * FROM clientes WHERE nome LIKE '%${nome}%'`, (error, results, fields) => {
+  connection.query(`SELECT * FROM clientes WHERE id LIKE '%${id}%'`, (error, results, fields) => {
     if (error) throw error;
     
     // Exibição dos resultados
@@ -64,9 +64,9 @@ app.post('/clientes', (req, res) => {
           <h1>Clientes encontrados</h1>
           <table>
             <tr>
-              <th>Nome</th>
-              <th>endereco</th>
-              <th>Idade</th>
+              <th>id</th>
+              <th>descricao</th>
+              <th>quantidade</th>
               <th>Número de filhos</th>
             </tr>
     `;
@@ -74,10 +74,10 @@ app.post('/clientes', (req, res) => {
     results.forEach((cliente) => {
       html += `
         <tr>
-          <td>${cliente.nome}</td>
-          <td>${cliente.endereco}</td>
-          <td>${cliente.idade}</td>
-          <td>${cliente.numfilhos}</td>
+          <td>${cliente.id}</td>
+          <td>${cliente.descricao}</td>
+          <td>${cliente.quantidade}</td>
+          <td>${cliente.valor}</td>
         </tr>
       `;
     });

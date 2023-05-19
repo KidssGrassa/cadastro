@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 // Rota para processar a consulta
-app.post('/clientes', (req, res) => {
+app.post('/produtos', (req, res) => {
 
   // Consulta no banco de dados
   connection.query(`SELECT * FROM clientes`, (error, results, fields) => {
